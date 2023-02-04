@@ -432,9 +432,7 @@ class _CalendarWeekState extends State<CalendarWeek> {
       title: title,
       dateStyle: compareDate(date, controller._today)
           ? widget.todayDateStyle
-          : date != null && (date.weekday == 6 || date.weekday == 7)
-              ? widget.weekendsStyle
-              : widget.dateStyle,
+          : widget.dateStyle,
       pressedDateStyle: widget.datePressedStyle,
       backgroundColor: widget.dateBackgroundColor,
       todayBackgroundColor: widget.todayBackgroundColor,
