@@ -85,15 +85,10 @@ class __DateItemState extends State<DateItem> {
             /// Set default style each [builder] is called
             _defaultTextStyle = widget.dateStyle;
 
-            /// Check and set [Background] of today
-            if (compareDate(widget.date, widget.today)) {
-              _defaultBackgroundColor = widget.todayBackgroundColor;
-            } else if (!data.hasError && data.hasData) {
-              final DateTime? dateSelected = data.data;
-              if (compareDate(widget.date, dateSelected)) {
-                _defaultBackgroundColor = widget.pressedBackgroundColor;
-                _defaultTextStyle = widget.pressedDateStyle;
-              }
+            final DateTime? dateSelected = data.data;
+            if (compareDate(widget.date, dateSelected)) {
+              _defaultBackgroundColor = widget.pressedBackgroundColor;
+              _defaultTextStyle = widget.pressedDateStyle;
             }
             return _body();
           },
@@ -114,9 +109,8 @@ class __DateItemState extends State<DateItem> {
             onTap: _onPressed,
             child: Container(
                 decoration: BoxDecoration(
-                  color: _defaultBackgroundColor!,
-                  shape: widget.dayShapeBorder!,
-                ),
+                    color: _defaultBackgroundColor!,
+                    borderRadius: BorderRadius.circular(10.0)),
                 padding: EdgeInsets.all(5),
                 child: Stack(
                   children: <Widget>[
