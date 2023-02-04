@@ -361,10 +361,10 @@ class _CalendarWeekState extends State<CalendarWeek> {
               : _monthItem(weeks.month),
 
           /// Day of week layout
-          _dayOfWeek(weeks.dayOfWeek),
+          _dayOfWeek(weeks.dayOfWeek, weeks.days),
 
           /// Date layout
-          _dates(weeks.days)
+          _dates(weeks.dayOfWeek, weeks.days),
         ],
       );
 
@@ -382,22 +382,28 @@ class _CalendarWeekState extends State<CalendarWeek> {
       );
 
   /// Day of week layout
-  Widget _dayOfWeek(List<String> dayOfWeek) => Container(
+  Widget _dayOfWeek(List<String> dayOfWeek, List<DateTime?> dates) => Container(
         margin: widget.marginDayOfWeek,
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: dayOfWeek.map(_dayOfWeekItem).toList()),
+            children: dayOfWeek.asMap().entries.map((entry) {
+              int idx = entry.key;
+              String title = entry.value;
+              DateTime? date = dates[idx];
+
+              return _dayOfWeekItem(title, date);
+            }).toList()),
       );
 
   /// Day of week item layout
-  Widget _dayOfWeekItem(String title) => Container(
+  Widget _dayOfWeekItem(String title, DateTime? date) => Container(
       alignment: Alignment.center,
       child: FittedBox(
         fit: BoxFit.scaleDown,
         child: Container(
           width: 50,
           child: Text(
-            title,
+            date?.day?.toString() ?? '',
             style: widget.weekendsIndexes
                         .indexOf(widget.daysOfWeek.indexOf(title)) !=
                     -1
@@ -410,14 +416,20 @@ class _CalendarWeekState extends State<CalendarWeek> {
       ));
 
   /// Date layout
-  Widget _dates(List<DateTime?> dates) => Row(
+  Widget _dates(List<String> dayOfWeek, List<DateTime?> dates) => Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: dates.map(_dateItem).toList());
+      children: dates.asMap().entries.map((entry) {
+        int idx = entry.key;
+        DateTime? date = entry.value;
+        String title = dayOfWeek[idx];
+        return _dateItem(date, title);
+      }).toList());
 
   /// Date item layout
-  Widget _dateItem(DateTime? date) => DateItem(
+  Widget _dateItem(DateTime? date, String title) => DateItem(
       today: controller._today,
       date: date,
+      title: title,
       dateStyle: compareDate(date, controller._today)
           ? widget.todayDateStyle
           : date != null && (date.weekday == 6 || date.weekday == 7)

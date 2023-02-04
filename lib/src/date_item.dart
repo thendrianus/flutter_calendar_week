@@ -10,6 +10,9 @@ class DateItem extends StatefulWidget {
   /// Date of item
   final DateTime? date;
 
+  /// Title of item
+  final String title;
+
   /// Style of [date]
   final TextStyle? dateStyle;
 
@@ -46,6 +49,7 @@ class DateItem extends StatefulWidget {
   DateItem({
     required this.today,
     required this.date,
+    required this.title,
     required this.cacheStream,
     this.dateStyle,
     this.pressedDateStyle,
@@ -124,7 +128,7 @@ class __DateItemState extends State<DateItem> {
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
                         child: Text(
-                          '${widget.date!.day}',
+                          '${widget.title}',
                           style: _defaultTextStyle!,
                         ),
                       ),
