@@ -93,7 +93,7 @@ class __DateItemState extends State<DateItem> {
               _defaultBackgroundColor = widget.pressedBackgroundColor;
               _defaultTextStyle = widget.pressedDateStyle;
             }
-            return _body();
+            return _body(context);
           },
         )
       : Container(
@@ -102,8 +102,9 @@ class __DateItemState extends State<DateItem> {
         );
 
   /// Body layout
-  Widget _body() => Container(
-        width: 50,
+  Widget _body(context) => Container(
+        constraints: BoxConstraints(maxWidth: 50, minWidth: 20),
+        width: MediaQuery.of(context).size.width * 1.20,
         height: 50,
         alignment: FractionalOffset.center,
         child: GestureDetector(
