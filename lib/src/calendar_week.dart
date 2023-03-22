@@ -401,7 +401,8 @@ class _CalendarWeekState extends State<CalendarWeek> {
       child: FittedBox(
         fit: BoxFit.scaleDown,
         child: Container(
-          width: 50,
+          constraints: BoxConstraints(maxWidth: 50, minWidth: 20),
+          width: MediaQuery.of(context).size.width * 1.20,
           child: Text(
             date?.day?.toString() ?? '',
             style: widget.weekendsIndexes
